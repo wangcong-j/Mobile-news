@@ -38,7 +38,7 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(res => {
   // 响应的数据就是 res   但我们实际需要的数据，存储在 res.data.data 中
   try {
-    return res.data.tada
+    return res.data.data
   } catch (e) {
     return res
   }
@@ -92,16 +92,16 @@ instance.interceptors.response.use(res => {
 
 // 导出一个使用配置好的axios来发请求的函数
 // 请求地址 url 请求方式 methdo  传参 data
-export default (url, methdo, data) => {
+export default (url, method, data) => {
   return instance({
     url,
-    methdo,
+    method,
     // 因请求方式的不同，需判断 data 放在什么位置
     // 当请求方式是get 是params来传参
     // 其他请求方式   是data来传参
     // 动态插入 属性 params|data
     // [] 写任意表达式  返回结果一定要是字符串类型
     // 不够严谨：用户传入请求方式 get Get GET
-    [methdo.toLowerCase() === 'get' ? 'params' : 'data']: data
+    [method.toLowerCase() === 'get' ? 'params' : 'data']: data
   })
 }
